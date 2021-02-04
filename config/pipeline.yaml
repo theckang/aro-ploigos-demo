@@ -1,0 +1,18 @@
+apiVersion: redhatgov.io/v1alpha1
+kind: TsscPipeline
+metadata:
+  name: tsscpipeline-jenkins-github
+  namespace: tssc
+spec:
+  appName: ref-quarkus-mvn-jenkins-std-github
+  appRepo:
+    destinationRepoName: reference-quarkus-mvn_jenkins_workflow-standard-github
+    # replace sourceUrl with your fork
+    sourceUrl: >-
+      https://github.com/theckang/reference-quarkus-mvn_jenkins_workflow-standard.git
+  autoStartPipeline: false
+  helmRepo:
+    destinationRepoName: reference-quarkus-mvn-cloud-resources_jenkins_workflow-standard
+    sourceUrl: >-
+      http://gitea.tssc.rht-set.com/ploigos-reference-applications/reference-quarkus-mvn-cloud-resources_jenkins_workflow-standard.git
+  serviceName: fruit-github
