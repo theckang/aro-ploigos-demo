@@ -74,7 +74,7 @@ echo $(oc get route fruit -n platform-ref-quarkus-mvn-jenkins-std-fruit-main-pro
 
 You should see:
 
-![Fruit List](images/fruit_list.png)
+![Fruit List](images/fruits_list.png)
 
 ## Troubleshooting
 
