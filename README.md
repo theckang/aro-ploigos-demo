@@ -43,26 +43,20 @@ echo $(oc get route gitea --template='http://{{.spec.host}}/platform/reference-q
 
 Open `.github/workflows/mirroring.yaml` with your favorite editor and replace the `REMOTE` with your Gitea instance.
 
-7. Commit this change locally in git
+7. Commit this change to your repo
 
 ```bash
 git clone <your-fork>
 cd <your-fork>
 git commit -am "Updated Gitea endpoint"
-```
-
-8. Let's make a change to the application.  Merge the `feature/kiwi` branch to your fork repo.  This will add a new fruit 'Kiwi' to the reference application.
-
-```bash
-git merge origin/feature/kiwi
 git push
 ```
 
-9. In GitHub, navigate to your fork.  Go to 'Actions'.  You should see the action:
+8. In GitHub, navigate to your fork.  Go to 'Actions'.  You should see the action:
 
 ![GitHub Action](images/github_action.png)
 
-10. Navigate to your running build job in Jenkins.  Login in `oc` admin credentials.  Wait ~10 minutes until the job is complete.
+9. Navigate to your running build job in Jenkins.  Login in `oc` admin credentials.  Wait ~10 minutes until the job is complete.
 
 ```bash
 echo $(oc get route jenkins --template='http://{{.spec.host}}/job/platform/job/reference-quarkus-mvn_jenkins_workflow-standard/')
@@ -72,13 +66,13 @@ It should look like this:
 
 ![Jenkins Job](images/jenkins_job.png)
 
-11. The Jenkins job built your application.  Navigate to the application in your browser.  
+10. The Jenkins job built your application.  Navigate to the application in your browser.  
 
 ```bash
 echo $(oc get route fruit -n platform-ref-quarkus-mvn-jenkins-std-fruit-main-prod --template='http://{{.spec.host}}/fruits.html')
 ```
 
-You should see 'Kiwi' in the Fruit List:
+You should see:
 
 ![Fruit List](images/fruit_list.png)
 
