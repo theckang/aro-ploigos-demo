@@ -63,13 +63,21 @@ git push
 
 ![GitHub Action](images/github_action.png)
 
-12. In Jenkins, navigate to the 'Platform Gitea Org'
+12. In Jenkins, navigate to your build job.  Wait a couple of minutes and the job should complete.
 
 ```bash
 echo $(oc get route jenkins --template='http://{{.spec.host}}/job/platform/job/reference-quarkus-mvn_jenkins_workflow-standard/')
 ```
 
-13. 
+13. The job created your application.  Navigate to your application in your browser.
+
+```bash
+echo $(oc get route fruit -n platform-ref-quarkus-mvn-jenkins-std-fruit-main-prod --template='http://{{.spec.host}}/fruits.html')
+```
+
+You should see 'Kiwi' in the Fruit List:
+
+> TODO
 
 ## Troubleshooting
 
