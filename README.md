@@ -50,34 +50,64 @@ echo $(oc get secret gitea-admin-credentials -o jsonpath="{.data.username}") | b
 echo $(oc get secret gitea-admin-credentials -o jsonpath="{.data.password}") | base64 --decode && echo
 ```
 
-10. Merge a branch to your fork repo to start the action.  This will add a new fruit 'Kiwi' to the reference application.
+10. In your fork repo, we need to modify the `.github/workflows/mirroring.yaml` resource.
+
+Get the URL of your Gitea instance
+
+```bash
+echo $(oc get route gitea --template='http://{{.spec.host}}')
+```
+
+Open `.github/workflows/mirroring.yaml` with your favorite editor and replace the `REMOTE` with your Gitea instance.
+
+11. Let's push this workflow to your fork repo and start a build.
 
 ```bash
 git clone <your-fork>
 cd <your-fork>
-git merge origin/feature/kiwi
+git commit -am "Updated Gitea endpoint"
 git push
 ```
 
-11. In GitHub, navigate to your fork.  Go to 'Actions'.  You should see the action:
+12. In GitHub, navigate to your fork.  Go to 'Actions'.  You should see the action:
 
 ![GitHub Action](images/github_action.png)
 
-12. In Jenkins, navigate to your build job.  Wait a couple of minutes and the job should complete.
+13. In Jenkins, navigate to your build job.  Wait a couple of minutes and the job should complete.
 
 ```bash
 echo $(oc get route jenkins --template='http://{{.spec.host}}/job/platform/job/reference-quarkus-mvn_jenkins_workflow-standard/')
 ```
 
-13. The job created your application.  Navigate to your application in your browser.
+14. The job created your application.  Navigate to the application in your browser.
 
 ```bash
 echo $(oc get route fruit -n platform-ref-quarkus-mvn-jenkins-std-fruit-main-prod --template='http://{{.spec.host}}/fruits.html')
 ```
 
-You should see 'Kiwi' in the Fruit List:
+> INSERT IMAGE
 
-> TODO
+15. Let's make a change to the application.  Merge the `feature/kiwi` branch to your fork repo.  This will add a new fruit 'Kiwi' to the reference application.
+
+```bash
+cd <your-fork>
+git merge origin/feature/kiwi
+git push
+```
+
+16. In GitHub, navigate to your fork.  Go to 'Actions'.  You should see the new action:
+
+![GitHub Kiwi Action](images/github_kiwi_action.png)
+
+17. In Jenkins, navigate to your new build job.  Wait a couple of minutes and the job should complete.
+
+```bash
+echo $(oc get route jenkins --template='http://{{.spec.host}}/job/platform/job/reference-quarkus-mvn_jenkins_workflow-standard/')
+```
+
+18. Navigate to the application in your browser.  You should see 'Kiwi' in the Fruit List:
+
+> INSERT IMAGE
 
 ## Troubleshooting
 
