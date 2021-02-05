@@ -115,6 +115,17 @@ echo $(oc get route jenkins --template='http://{{.spec.host}}/job/platform')
 
 On the left, hit 'Scan Gitea Organization Now'.  This will configure a webhook in Gitea for you.
 
+2.  If your build fails and you see this error in the logs:
+
+```
+  STDERR:
+error authenticating creds for "quay-ploigos.apps.ftehp08f.eastus.aroapp.io": Requesting bear token: invalid status code from registry 500 (Internal Server Error)
+level=error msg="exit status 125"
+```
+
+This is a known error and will require you to re-run the build.
+
+
 ## Resources
 
 * [Ploigos Operator](https://github.com/ploigos/ploigos-software-factory-operator)
