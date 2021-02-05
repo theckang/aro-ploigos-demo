@@ -24,25 +24,7 @@ oc project devsecops    # modify this if you installed Ploigos in a different pr
 oc create -f config/pipeline.yaml
 ```
 
-5. Navigate to Jenkins in your browser.  Login with admin credentials.
-
-```bash
-echo $(oc get route jenkins --template='http://{{.spec.host}}')
-```
-
-6. In Jenkins, navigate to 'Manage Jenkins' -> 'Configure System' -> 'Gitea Servers'.  You should see a checkbox for 'Manage hooks'.  Select the checkbox and make sure to hit `Save`.
-
-![Manage Hook](images/manage_hook.png)
-
-7. In Jenkins, navigate to the 'Platform Gitea Org'
-
-```bash
-echo $(oc get route jenkins --template='http://{{.spec.host}}/job/platform')
-```
-
-8. On the left, hit 'Scan Gitea Organization Now'.  This will configure a webhook in Gitea for you.
-
-9. The repo has a GitHub action that will mirror your fork repo to the Gitea instance.  You can view the example [here](https://github.com/theckang/reference-quarkus-mvn_jenkins_workflow-standard/blob/main/.github/workflows/mirroring.yaml).  You need to add the Gitea admin's username and password as a secret to your repo.
+5. The repo has a GitHub action that will mirror your fork repo to the Gitea instance.  You can view the example [here](https://github.com/theckang/reference-quarkus-mvn_jenkins_workflow-standard/blob/main/.github/workflows/mirroring.yaml).  You need to add the Gitea admin's username and password as a secret to your repo.
 
 In GitHub, navigate to your forked repo.  Go to 'Settings' -> 'Secrets'.  Create two repository secrets `GIT_USERNAME` and `GIT_PASSWORD`.  Execute these commands to get the username and password of your Gitea instance and enter these values.
 
@@ -51,7 +33,7 @@ echo $(oc get secret gitea-admin-credentials -o jsonpath="{.data.username}") | b
 echo $(oc get secret gitea-admin-credentials -o jsonpath="{.data.password}") | base64 --decode && echo
 ```
 
-10. In your fork repo, we need to modify the `.github/workflows/mirroring.yaml` resource.
+6. In your fork repo, you need to modify the `.github/workflows/mirroring.yaml` resource.
 
 Get the URL of your Gitea repo
 
@@ -61,7 +43,7 @@ echo $(oc get route gitea --template='http://{{.spec.host}}/platform/reference-q
 
 Open `.github/workflows/mirroring.yaml` with your favorite editor and replace the `REMOTE` with your Gitea instance.
 
-11. Commit this change locally in git
+7. Commit this change locally in git
 
 ```bash
 git clone <your-fork>
@@ -69,18 +51,18 @@ cd <your-fork>
 git commit -am "Updated Gitea endpoint"
 ```
 
-12. Let's make a change to the application.  Merge the `feature/kiwi` branch to your fork repo.  This will add a new fruit 'Kiwi' to the reference application.
+8. Let's make a change to the application.  Merge the `feature/kiwi` branch to your fork repo.  This will add a new fruit 'Kiwi' to the reference application.
 
 ```bash
 git merge origin/feature/kiwi
 git push
 ```
 
-13. In GitHub, navigate to your fork.  Go to 'Actions'.  You should see the action:
+9. In GitHub, navigate to your fork.  Go to 'Actions'.  You should see the action:
 
 ![GitHub Action](images/github_action.png)
 
-14. In Jenkins, navigate to your running build job.  Wait ~10 minutes until the job is complete.
+10. Navigate to your running build job in Jenkins.  Login in `oc` admin credentials.  Wait ~10 minutes until the job is complete.
 
 ```bash
 echo $(oc get route jenkins --template='http://{{.spec.host}}/job/platform/job/reference-quarkus-mvn_jenkins_workflow-standard/')
@@ -90,7 +72,7 @@ It should look like this:
 
 ![Jenkins Job](images/jenkins_job.png)
 
-15. The Jenkins job built your application.  Navigate to the application in your browser.  
+11. The Jenkins job built your application.  Navigate to the application in your browser.  
 
 ```bash
 echo $(oc get route fruit -n platform-ref-quarkus-mvn-jenkins-std-fruit-main-prod --template='http://{{.spec.host}}/fruits.html')
@@ -121,7 +103,23 @@ Navigate to 'Settings' -> 'Webhooks' and you should see:
 
 ![Gitea Webhook](images/gitea_webhook.png)
 
-If you don't see this webhook, make sure to scan the Gitea org in Step #8 above.
+If you don't see this webhook, navigate to Jenkins in your browser.  Login with `oc` admin credentials.
+
+```bash
+echo $(oc get route jenkins --template='http://{{.spec.host}}')
+```
+
+In Jenkins, navigate to 'Manage Jenkins' -> 'Configure System' -> 'Gitea Servers'.  You should see a checkbox for 'Manage hooks'.  Select the checkbox if it's not checked and make sure to hit `Save`.
+
+![Manage Hook](images/manage_hook.png)
+
+Now navigate to the 'Platform Gitea Org'
+
+```bash
+echo $(oc get route jenkins --template='http://{{.spec.host}}/job/platform')
+```
+
+On the left, hit 'Scan Gitea Organization Now'.  This will configure a webhook in Gitea for you.
 
 ## Resources
 
