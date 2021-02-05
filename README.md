@@ -20,6 +20,7 @@ Login to the cluster using `oc login` and admin credentials.
 4. Deploy the pipeline.
 
 ```bash
+oc project devsecops    # modify this if you installed Ploigos in a different project
 oc create -f config/pipeline.yaml
 ```
 
