@@ -41,7 +41,22 @@ echo $(oc get route jenkins --template='http://{{.spec.host}}/job/platform')
 
 8. On the left, hit 'Scan Gitea Organization Now'.  This will configure a webhook in Gitea for you.
 
-9. Set up GitHub Mirror to Gitea - TODO
+9. The repo has a GitHub action that will mirror your fork repo to the Gitea instance.  You can view the example [here](https://github.com/theckang/reference-quarkus-mvn_jenkins_workflow-standard/blob/main/.github/workflows/mirroring.yaml).  You need to add the Gitea admin's username and password as a secret to your repo.
+
+Navigate to your forked repo.  Go to 'Settings' -> 'Secrets'.  Create two repository secrets `GIT_USERNAME` and `GIT_PASSWORD`.  Execute these commands to get the username and password of your Gitea instance and enter these values.
+
+```bash
+echo $(oc get secret gitea-admin-credentials -o jsonpath="{.data.username}") | base64 --decode && echo
+echo $(oc get secret gitea-admin-credentials -o jsonpath="{.data.password}") | base64 --decode && echo
+```
+
+10. Merge a branch to your fork repo to start the action.
+
+```
+
+```
+
+
 
 ## Troubleshooting
 
