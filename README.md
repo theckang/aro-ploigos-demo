@@ -80,11 +80,15 @@ git push
 
 ![GitHub Action](images/github_action.png)
 
-14. In Jenkins, navigate to your build job.  Wait ~10 minutes and the job should complete.
+14. In Jenkins, navigate to your running build job.  Wait ~10 minutes until the job is complete.
 
 ```bash
 echo $(oc get route jenkins --template='http://{{.spec.host}}/job/platform/job/reference-quarkus-mvn_jenkins_workflow-standard/')
 ```
+
+It should look like this:
+
+![Jenkins Job](images/jenkins_job.png)
 
 15. The Jenkins job built your application.  Navigate to the application in your browser.  
 
@@ -94,11 +98,7 @@ echo $(oc get route fruit -n platform-ref-quarkus-mvn-jenkins-std-fruit-main-pro
 
 You should see 'Kiwi' in the Fruit List:
 
-```bash
-echo $(oc get route fruit -n platform-ref-quarkus-mvn-jenkins-std-fruit-main-prod --template='http://{{.spec.host}}/fruits.html')
-```
-
-> INSERT IMAGE
+![Fruit List](images/fruit_list.png)
 
 ## Troubleshooting
 
