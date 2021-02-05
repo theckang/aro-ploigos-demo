@@ -53,10 +53,10 @@ echo $(oc get secret gitea-admin-credentials -o jsonpath="{.data.password}") | b
 
 10. In your fork repo, we need to modify the `.github/workflows/mirroring.yaml` resource.
 
-Get the URL of your Gitea instance
+Get the URL of your Gitea repo
 
 ```bash
-echo $(oc get route gitea --template='http://{{.spec.host}}')
+echo $(oc get route gitea --template='http://{{.spec.host}}/platform/reference-quarkus-mvn_jenkins_workflow-standard.git')
 ```
 
 Open `.github/workflows/mirroring.yaml` with your favorite editor and replace the `REMOTE` with your Gitea instance.
