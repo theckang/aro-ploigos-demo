@@ -54,7 +54,7 @@ git push
 
 8. In GitHub, navigate to your fork.  Go to 'Actions'.  You should see the action:
 
-![GitHub Action](images/github_action.png)
+![GitHub Action](images/github_action_gitea.png)
 
 9. Navigate to your running build job in Jenkins.  Login in `oc` admin credentials.  Wait ~10 minutes until the job is complete.
 
